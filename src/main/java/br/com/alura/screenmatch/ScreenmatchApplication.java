@@ -1,6 +1,8 @@
 package br.com.alura.screenmatch;
 
-import br.com.alura.screenmatch.service.ConsumoApi;
+import br.com.alura.screenmatch.principal.Principal;
+import br.com.alura.screenmatch.repository.SeriesRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -8,14 +10,18 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class ScreenmatchApplication implements CommandLineRunner {
 
+	@Autowired
+	private SeriesRepository seriesRepository;
+
 	public static void main(String[] args) {
 		SpringApplication.run(ScreenmatchApplication.class, args);
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
-		var consumoApi = new ConsumoApi();
-		var json = consumoApi.obterDados("http://www.omdbapi.com/?i=tt3896198&apikey=d9d99f52");
-		System.out.println(json);
+
+		Principal principal = new Principal(seriesRepository);
+		principal.exibeMenu();
+
 	}
 }
